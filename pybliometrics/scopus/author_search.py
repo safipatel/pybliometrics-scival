@@ -25,7 +25,7 @@ class AuthorSearch(Search):
         """
         # Initiate namedtuple with ordered list of fields
         fields = 'eid orcid surname initials givenname affiliation documents '\
-                 'affiliation_id city country areas'
+                 'affiliation_id city country areas dc_identifier'
         auth = namedtuple('Author', fields)
         check_field_consistency(self._integrity, fields)
         # Parse elements one-by-one
@@ -47,7 +47,9 @@ class AuthorSearch(Search):
                        affiliation=aff.get('affiliation-name'),
                        affiliation_id=aff.get('affiliation-id'),
                        city=aff.get('affiliation-city'),
-                       country=aff.get('affiliation-country'))
+                       country=aff.get('affiliation-country'),
+                       dc_identifier=item.get('dc:identifier')
+                       )
             out.append(new)
         # Finalize
         check_integrity(out, self._integrity, self._action)
